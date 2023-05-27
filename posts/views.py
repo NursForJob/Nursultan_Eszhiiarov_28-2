@@ -1,7 +1,7 @@
 import datetime
 
-from django.shortcuts import HttpResponse, redirect
-
+from django.shortcuts import HttpResponse, render
+from posts.models import Post
 # Create your views here.
 
 
@@ -19,3 +19,17 @@ def now_date(request):
 def good_bye(request):
     if request.method == "GET":
         return HttpResponse('Goodby user!')
+
+
+def main_page_view(request):
+    if request.method == 'GET':
+         return render(request, 'layouts/index.html')
+
+
+def posts_view(request):
+    if request.method == "GET":
+        posts = Post.objects.all()
+        context = {
+            'posts': posts
+        }
+        return render(request, 'posts/posts.html', context=context)
