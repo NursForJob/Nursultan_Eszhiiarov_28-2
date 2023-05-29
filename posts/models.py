@@ -15,3 +15,12 @@ class Post(models.Model):                               # создаем мод�
 
     def __str__(self):
         return self.title                               # чтоб в панели были видны названия заголовок
+
+
+class Comment(models.Model):
+    text = models.CharField(max_length=256)
+    created_date = models.DateTimeField(auto_now_add=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)  # связь с таблицей Post, on_delete удалить при удалении поста
+
+    def __str__(self):
+        return f'{self.post.title} - {self.text}'
